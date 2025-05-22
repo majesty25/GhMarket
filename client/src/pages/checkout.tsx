@@ -112,7 +112,7 @@ const Checkout = () => {
                 </label>
               </div>
               
-              <div className={`grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 ${user ? 'transition-opacity duration-300' : ''}`}>
+              <div className={`grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 ${user ? 'transition-opacity duration-300' : ''}`} style={{ display: formData.fullName && user ? 'none' : 'grid' }}>
                 <div>
                   <label className="block text-sm font-medium text-neutral-700 mb-1">Full Name</label>
                   <input
