@@ -12,6 +12,7 @@ const UserProfile = () => {
   const { user, role } = useUserContext();
   const [, navigate] = useLocation();
   const [activeTab, setActiveTab] = useState('profile');
+  const [showAddressForm, setShowAddressForm] = useState(false);
 
   useEffect(() => {
     document.title = 'My Account - GhanaMarket';
@@ -216,14 +217,18 @@ const UserProfile = () => {
           <CardContent className="p-6">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-bold">My Addresses</h2>
-              <Button className="bg-primary text-white">
-                <i className="ri-add-line mr-1"></i> Add New Address
+              <Button 
+                className="bg-primary text-white"
+                onClick={() => setShowAddressForm(prev => !prev)}
+              >
+                <i className="ri-add-line mr-1"></i> 
+                {showAddressForm ? 'Cancel' : 'Add New Address'}
               </Button>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Address Form */}
-                <div className="border border-neutral-200 rounded-lg p-4">
+                {showAddressForm && <div className="border border-neutral-200 rounded-lg p-4">
                   <h3 className="font-medium mb-4">Add New Address</h3>
                   <form className="space-y-4" onSubmit={(e) => {
                     e.preventDefault();
@@ -272,7 +277,7 @@ const UserProfile = () => {
                       Add Address
                     </Button>
                   </form>
-                </div>
+                </div>}
 
                 {/* Existing Addresses */}
                 <div className="space-y-4">
