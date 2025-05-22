@@ -222,41 +222,96 @@ const UserProfile = () => {
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="border border-primary bg-primary/5 rounded-lg p-4 relative">
-                <div className="absolute top-4 right-4 flex gap-2">
-                  <button className="text-neutral-500 hover:text-primary">
-                    <i className="ri-pencil-line"></i>
-                  </button>
-                  <button className="text-neutral-500 hover:text-accent">
-                    <i className="ri-delete-bin-line"></i>
-                  </button>
+                {/* Address Form */}
+                <div className="border border-neutral-200 rounded-lg p-4">
+                  <h3 className="font-medium mb-4">Add New Address</h3>
+                  <form className="space-y-4" onSubmit={(e) => {
+                    e.preventDefault();
+                    toast({
+                      title: "Address added",
+                      description: "Your new address has been added successfully.",
+                    });
+                  }}>
+                    <div>
+                      <label className="block text-sm font-medium text-neutral-500 mb-1">Address Title</label>
+                      <input
+                        type="text"
+                        placeholder="e.g. Home, Office"
+                        className="w-full p-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-neutral-500 mb-1">Full Address</label>
+                      <textarea
+                        placeholder="Street address"
+                        rows={3}
+                        className="w-full p-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-neutral-500 mb-1">City</label>
+                      <input
+                        type="text"
+                        placeholder="City"
+                        className="w-full p-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-neutral-500 mb-1">Phone Number</label>
+                      <input
+                        type="tel"
+                        placeholder="+233 XX XXX XXXX"
+                        className="w-full p-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
+                      />
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <input type="checkbox" id="default-address" />
+                      <label htmlFor="default-address" className="text-sm">Set as default address</label>
+                    </div>
+                    <Button type="submit" className="w-full bg-primary text-white">
+                      Add Address
+                    </Button>
+                  </form>
                 </div>
-                <div className="mb-2">
-                  <span className="bg-primary text-white text-xs px-2 py-0.5 rounded">Default</span>
+
+                {/* Existing Addresses */}
+                <div className="space-y-4">
+                  <div className="border border-primary bg-primary/5 rounded-lg p-4 relative">
+                    <div className="absolute top-4 right-4 flex gap-2">
+                      <button className="text-neutral-500 hover:text-primary">
+                        <i className="ri-pencil-line"></i>
+                      </button>
+                      <button className="text-neutral-500 hover:text-accent">
+                        <i className="ri-delete-bin-line"></i>
+                      </button>
+                    </div>
+                    <div className="mb-2">
+                      <span className="bg-primary text-white text-xs px-2 py-0.5 rounded">Default</span>
+                    </div>
+                    <h3 className="font-medium">Home</h3>
+                    <p className="text-neutral-700 mb-2">123 Independence Ave, Accra, Ghana</p>
+                    <p className="text-sm text-neutral-500">
+                      <i className="ri-phone-line mr-1"></i> +233 20 123 4567
+                    </p>
+                  </div>
+                  
+                  <div className="border border-neutral-200 rounded-lg p-4 relative">
+                    <div className="absolute top-4 right-4 flex gap-2">
+                      <button className="text-neutral-500 hover:text-primary">
+                        <i className="ri-pencil-line"></i>
+                      </button>
+                      <button className="text-neutral-500 hover:text-accent">
+                        <i className="ri-delete-bin-line"></i>
+                      </button>
+                    </div>
+                    <h3 className="font-medium">Office</h3>
+                    <p className="text-neutral-700 mb-2">45 Liberation Road, Airport, Accra, Ghana</p>
+                    <p className="text-sm text-neutral-500">
+                      <i className="ri-phone-line mr-1"></i> +233 25 987 6543
+                    </p>
+                  </div>
                 </div>
-                <h3 className="font-medium">Home</h3>
-                <p className="text-neutral-700 mb-2">123 Independence Ave, Accra, Ghana</p>
-                <p className="text-sm text-neutral-500">
-                  <i className="ri-phone-line mr-1"></i> +233 20 123 4567
-                </p>
               </div>
-              
-              <div className="border border-neutral-200 rounded-lg p-4 relative">
-                <div className="absolute top-4 right-4 flex gap-2">
-                  <button className="text-neutral-500 hover:text-primary">
-                    <i className="ri-pencil-line"></i>
-                  </button>
-                  <button className="text-neutral-500 hover:text-accent">
-                    <i className="ri-delete-bin-line"></i>
-                  </button>
-                </div>
-                <h3 className="font-medium">Office</h3>
-                <p className="text-neutral-700 mb-2">45 Liberation Road, Airport, Accra, Ghana</p>
-                <p className="text-sm text-neutral-500">
-                  <i className="ri-phone-line mr-1"></i> +233 25 987 6543
-                </p>
-              </div>
-            </div>
           </CardContent>
         </Card>
       </TabsContent>
