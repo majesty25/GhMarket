@@ -397,7 +397,7 @@ export const products: Product[] = [
     slug: 'organic-red-quinoa-1kg',
     description: 'Premium organic red quinoa, rich in protein and nutrients.',
     price: 45,
-    discountPrice: null,
+    discountPrice: undefined,
     images: ['https://images.unsplash.com/photo-1586201375761-83865001e31c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80'],
     category: categories[2],
     seller: sellers[2],
