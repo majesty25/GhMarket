@@ -5,12 +5,18 @@ import { useCart } from '@/context/cart-context';
 import RoleSwitchModal from '@/components/modals/role-switch-modal';
 import CartSidebar from '@/components/cart/cart-sidebar';
 import { categories } from '@/data';
+import { useGetCartCountQuery } from '@/redux/features/api/apiSlice';
+import { CartItem } from '@/types';
 
 const Header = () => {
   const { user, role, setIsRoleModalOpen, isRoleModalOpen, logout, isAuthenticated } = useUserContext();
-  const { isCartOpen, setIsCartOpen, getCartCount } = useCart();
+  const { isCartOpen, setIsCartOpen } = useCart();
   const [searchTerm, setSearchTerm] = useState('');
   const [location, navigate] = useLocation();
+  const { data: cartCountData, isLoading: isCartCountLoading } = useGetCartCountQuery();
+  
+  // Extract cart count from RTK Query data
+  const cartCount = cartCountData?.count || 0;
 
   const handleUserRoleSwitch = () => {
     setIsRoleModalOpen(true);
@@ -47,7 +53,7 @@ const Header = () => {
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2">
               <div className="flex items-center justify-center w-10 h-10 rounded-md bg-primary text-white font-bold text-xl">G</div>
-              <div className="text-xl font-bold text-primary">Ghana<span className="text-accent">Market</span></div>
+              <div className="text-xl font-bold text-primary">Boafo<span className="text-accent">Market</span></div>
             </Link>
             
             {/* Search Bar */}
@@ -107,9 +113,9 @@ const Header = () => {
                 >
                   <i className="ri-shopping-cart-line text-xl"></i>
                   <span className="text-xs hidden md:inline">Cart</span>
-                  {getCartCount() > 0 && (
+                  {cartCount > 0 && (
                     <span className="absolute -top-2 -right-2 bg-accent text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-                      {getCartCount()}
+                      {isCartCountLoading ? '...' : cartCount}
                     </span>
                   )}
                 </button>
@@ -130,7 +136,7 @@ const Header = () => {
                 </Link>
                 {categories.map(category => (
                   <Link 
-                    key={category.id} 
+                    key={category._id} 
                     href={`/category/${category.slug}`} 
                     className={`text-sm font-medium hover:text-primary whitespace-nowrap ${location.startsWith(`/category/${category.slug}`) ? 'text-primary' : ''}`}
                   >

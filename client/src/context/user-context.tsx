@@ -3,6 +3,7 @@ import { User, UserRole } from '@/types';
 
 interface UserContextType {
   user: User | null;
+  setUser: any;
   role: UserRole;
   switchRole: (role: UserRole) => void;
   isRoleModalOpen: boolean;
@@ -109,6 +110,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   return (
     <UserContext.Provider value={{
       user,
+      setUser,
       role,
       switchRole,
       isRoleModalOpen,

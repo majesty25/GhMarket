@@ -1,13 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'wouter';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useUserContext } from '@/context/user-context';
 import { toast } from '@/hooks/use-toast';
+import { useLoginMutation } from '@/redux/features/api/apiSlice';
 
 const LoginPage = () => {
   const [, navigate] = useLocation();
-  const { user } = useUserContext();
   
   const [formData, setFormData] = useState({
     email: '',
@@ -19,13 +18,39 @@ const LoginPage = () => {
     password: '',
   });
   
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  // Use the login mutation hook
+  const [login, { isLoading: isSubmitting }] = useLoginMutation();
+  
+  // Check if user is already logged in
+  // const { data: currentUser, isLoading: isCheckingAuth } = useGetCurrentUserQuery(undefined, {
+  //   skip: false, // Always check auth status
+  // });
   
   // Redirect if user is already logged in
-  if (user) {
-    navigate('/');
-    return null;
-  }
+  // useEffect(() => {
+  //   if () {
+  //     navigate('/');
+  //   }
+  // }, [currentUser, isCheckingAuth, navigate]);
+  
+  // // Show loading while checking authentication
+  // if (isCheckingAuth) {
+  //   return (
+  //     <div className="min-h-screen flex items-center justify-center bg-neutral-50">
+  //       <div className="flex items-center justify-center">
+  //         <svg className="animate-spin h-8 w-8 text-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+  //           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+  //           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+  //         </svg>
+  //       </div>
+  //     </div>
+  //   );
+  // }
+  
+  // // Don't render if user is already logged in
+  // if (currentUser) {
+  //   return null;
+  // }
   
   const validateForm = () => {
     const errors = {
@@ -59,42 +84,71 @@ const LoginPage = () => {
       ...prev,
       [name]: value,
     }));
+    
+    // Clear field error when user starts typing
+    if (formErrors[name as keyof typeof formErrors]) {
+      setFormErrors((prev) => ({
+        ...prev,
+        [name]: '',
+      }));
+    }
   };
   
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!validateForm()) {
       return;
     }
     
-    setIsSubmitting(true);
-    
-    // Simulate API call
-    setTimeout(() => {
-      // In a real app, we would validate credentials with the backend
-      // For demo, we'll just check a hardcoded email/password
-      if (formData.email === 'user@example.com' && formData.password === 'password') {
-        toast({
-          title: "Login successful",
-          description: "Welcome back to GhanaMarket!",
-          duration: 3000,
-        });
-        
-        // Normally we would get user data from the backend
-        // For now, just redirect to home page
-        navigate('/');
-      } else {
-        toast({
-          title: "Login failed",
-          description: "Invalid email or password. Try user@example.com / password",
-          variant: "destructive",
-          duration: 5000,
-        });
+    try {
+      const result = await login({
+        email: formData.email,
+        password: formData.password,
+      }).unwrap();
+      
+      console.log('Login result:', result.user);
+      
+      toast({
+        title: "Login successful",
+        description: "Welcome back to GhanaMarket!",
+        duration: 3000,
+      });
+      
+      // Navigate to home page - RTK Query will automatically refetch user data
+      navigate('/');
+      
+    } catch (error: any) {
+      // Handle different types of errors
+      let errorMessage = "An error occurred during login";
+      
+      if (error?.data?.message) {
+        errorMessage = error.data.message;
+      } else if (error?.message) {
+        errorMessage = error.message;
+      } else if (error?.status === 401) {
+        errorMessage = "Invalid email or password";
+      } else if (error?.status === 429) {
+        errorMessage = "Too many login attempts. Please try again later";
+      } else if (error?.status >= 500) {
+        errorMessage = "Server error. Please try again later";
       }
       
-      setIsSubmitting(false);
-    }, 1000);
+      toast({
+        title: "Login failed",
+        description: errorMessage,
+        variant: "destructive",
+        duration: 5000,
+      });
+      
+      // Clear form on certain errors
+      if (error?.status === 401) {
+        setFormData(prev => ({
+          ...prev,
+          password: '',
+        }));
+      }
+    }
   };
   
   return (
@@ -125,6 +179,7 @@ const LoginPage = () => {
                 value={formData.email}
                 onChange={handleChange}
                 className={formErrors.email ? 'border-red-500' : ''}
+                disabled={isSubmitting}
               />
               {formErrors.email && <p className="mt-1 text-sm text-red-500">{formErrors.email}</p>}
             </div>
@@ -146,6 +201,7 @@ const LoginPage = () => {
                 value={formData.password}
                 onChange={handleChange}
                 className={formErrors.password ? 'border-red-500' : ''}
+                disabled={isSubmitting}
               />
               {formErrors.password && <p className="mt-1 text-sm text-red-500">{formErrors.password}</p>}
             </div>
@@ -190,7 +246,8 @@ const LoginPage = () => {
           <div className="mt-6 grid grid-cols-1 gap-3">
             <button
               type="button"
-              className="w-full inline-flex justify-center py-2 px-4 border border-neutral-300 rounded-md shadow-sm bg-white text-sm font-medium text-neutral-700 hover:bg-neutral-50"
+              className="w-full inline-flex justify-center py-2 px-4 border border-neutral-300 rounded-md shadow-sm bg-white text-sm font-medium text-neutral-700 hover:bg-neutral-50 disabled:opacity-50"
+              disabled={isSubmitting}
             >
               <svg className="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 2C6.477 2 2 6.477 2 12C2 17.523 6.477 22 12 22C17.523 22 22 17.523 22 12C22 6.477 17.523 2 12 2Z" fill="#E4572E"/>
@@ -199,13 +256,6 @@ const LoginPage = () => {
               Continue with Ghana Pay
             </button>
           </div>
-        </div>
-        
-        {/* Demo Credentials */}
-        <div className="mt-6 text-center text-sm text-neutral-500 bg-yellow-50 border border-yellow-200 p-3 rounded-md">
-          <p className="font-medium text-yellow-700">Demo Credentials</p>
-          <p className="mt-1">Email: user@example.com</p>
-          <p>Password: password</p>
         </div>
       </div>
     </div>

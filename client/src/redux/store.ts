@@ -1,13 +1,16 @@
-import {configureStore} from '@reduxjs/toolkit';
-import {setupListeners} from '@reduxjs/toolkit/query';
+import { configureStore } from '@reduxjs/toolkit';
+import { api } from './features/api/apiSlice';
 
-
-const store = configureStore({
+export const store = configureStore({
   reducer: {
-    // Add your reducers here
+    // Add the RTK Query reducer under its `reducerPath`
+    [api.reducerPath]: api.reducer,
   },
+  // Ensure the RTK Query middleware is added
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: false, // Disable serializable check if needed
-    }),
+    getDefaultMiddleware().concat(api.middleware),
 });
+
+// Optional: derive RootState and AppDispatch types
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

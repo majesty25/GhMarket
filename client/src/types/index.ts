@@ -10,27 +10,32 @@ export interface User {
 }
 
 export interface SubCategory {
-  id: string;
+  _id: string;
   name: string;
   slug: string;
   categoryId: string;
-  image?: string;
+  children?: SubCategory[]
+  imageUrl?: string;
   featured?: boolean;
 }
 
 export interface Category {
-  id: string;
+  _id: string;
   name: string;
   icon: string;
   slug: string;
-  image?: string;
+  imageUrl?: string;
   description?: string;
+  children?: SubCategory[];
   subCategories?: SubCategory[];
 }
 
 export interface Product {
-  id: string;
+  id: string | undefined;
+  _id: string;
   name: string;
+  count: number;
+  data: any;
   slug: string;
   description: string;
   price: number;

@@ -10,7 +10,7 @@ export const categories: Category[] = [
     description: 'Discover the latest electronics, from smartphones and laptops to home entertainment systems.',
     subCategories: [
       {
-        id: '1-1',
+        _id: '1-1',
         name: 'Smartphones',
         slug: 'smartphones',
         categoryId: '1',
@@ -359,7 +359,9 @@ export const products: Product[] = [
     rating: 4.7,
     reviews: 120,
     stock: 15,
-    featured: true
+    featured: true,
+    _id: '',
+    data: undefined
   },
   {
     id: '9',
@@ -374,7 +376,9 @@ export const products: Product[] = [
     rating: 4.9,
     reviews: 85,
     stock: 10,
-    featured: true
+    featured: true,
+    _id: '',
+    data: undefined
   },
   {
     id: '10',
@@ -389,7 +393,9 @@ export const products: Product[] = [
     rating: 4.8,
     reviews: 45,
     stock: 20,
-    featured: true
+    featured: true,
+    _id: '',
+    data: undefined
   },
   {
     id: '11',
@@ -404,7 +410,9 @@ export const products: Product[] = [
     rating: 4.6,
     reviews: 28,
     stock: 100,
-    featured: false
+    featured: false,
+    _id: '',
+    data: undefined
   },
   {
     id: '12',
@@ -419,7 +427,9 @@ export const products: Product[] = [
     rating: 4.7,
     reviews: 32,
     stock: 15,
-    featured: true
+    featured: true,
+    _id: '',
+    data: undefined
   },
   {
     id: '13',
@@ -434,7 +444,9 @@ export const products: Product[] = [
     rating: 4.9,
     reviews: 156,
     stock: 25,
-    featured: true
+    featured: true,
+    _id: '',
+    data: undefined
   },
   {
     id: '14',
@@ -449,7 +461,9 @@ export const products: Product[] = [
     rating: 4.8,
     reviews: 42,
     stock: 30,
-    featured: false
+    featured: false,
+    _id: '',
+    data: undefined
   },
   {
     id: '15',
@@ -464,7 +478,9 @@ export const products: Product[] = [
     rating: 4.7,
     reviews: 89,
     stock: 100,
-    featured: false
+    featured: false,
+    _id: '',
+    data: undefined
   },
   {
     id: '16',
@@ -479,7 +495,9 @@ export const products: Product[] = [
     rating: 4.6,
     reviews: 67,
     stock: 10,
-    featured: true
+    featured: true,
+    _id: '',
+    data: undefined
   },
   {
     id: '17',
@@ -494,7 +512,9 @@ export const products: Product[] = [
     rating: 4.5,
     reviews: 34,
     stock: 20,
-    featured: false
+    featured: false,
+    _id: '',
+    data: undefined
   },
   {
     id: '18',
@@ -509,7 +529,9 @@ export const products: Product[] = [
     rating: 4.7,
     reviews: 28,
     stock: 45,
-    featured: false
+    featured: false,
+    _id: '',
+    data: undefined
   },
   {
     id: '19',
@@ -524,7 +546,9 @@ export const products: Product[] = [
     rating: 4.8,
     reviews: 92,
     stock: 8,
-    featured: true
+    featured: true,
+    _id: '',
+    data: undefined
   },
   {
     id: '20',
@@ -539,7 +563,9 @@ export const products: Product[] = [
     rating: 4.9,
     reviews: 56,
     stock: 40,
-    featured: false
+    featured: false,
+    _id: '',
+    data: undefined
   },
   {
     id: '21',
@@ -554,7 +580,9 @@ export const products: Product[] = [
     rating: 4.6,
     reviews: 78,
     stock: 30,
-    featured: true
+    featured: true,
+    _id: '',
+    data: undefined
   },
   {
     id: '22',
@@ -569,7 +597,9 @@ export const products: Product[] = [
     rating: 4.7,
     reviews: 45,
     stock: 25,
-    featured: false
+    featured: false,
+    _id: '',
+    data: undefined
   },
   {
     id: '23',
@@ -584,7 +614,9 @@ export const products: Product[] = [
     rating: 4.5,
     reviews: 23,
     stock: 35,
-    featured: false
+    featured: false,
+    _id: '',
+    data: undefined
   },
   {
     id: '24',
@@ -599,7 +631,9 @@ export const products: Product[] = [
     rating: 4.8,
     reviews: 67,
     stock: 50,
-    featured: true
+    featured: true,
+    _id: '',
+    data: undefined
   },
   {
     id: '25',
@@ -614,7 +648,9 @@ export const products: Product[] = [
     rating: 4.7,
     reviews: 89,
     stock: 40,
-    featured: false
+    featured: false,
+    _id: '',
+    data: undefined
   },
   {
     id: '26',
@@ -629,7 +665,9 @@ export const products: Product[] = [
     rating: 4.6,
     reviews: 34,
     stock: 60,
-    featured: false
+    featured: false,
+    _id: '',
+    data: undefined
   },
   {
     id: '27',
@@ -644,7 +682,9 @@ export const products: Product[] = [
     rating: 4.9,
     reviews: 28,
     stock: 15,
-    featured: true
+    featured: true,
+    _id: '',
+    data: undefined
   },
   {
     id: '2',
@@ -659,7 +699,9 @@ export const products: Product[] = [
     rating: 4.8,
     reviews: 83,
     stock: 7,
-    featured: true
+    featured: true,
+    _id: '',
+    data: undefined
   },
   {
     id: '3',
@@ -674,7 +716,9 @@ export const products: Product[] = [
     rating: 5.0,
     reviews: 215,
     stock: 30,
-    featured: true
+    featured: true,
+    _id: '',
+    data: undefined
   },
   {
     id: '4',
@@ -689,7 +733,9 @@ export const products: Product[] = [
     rating: 4.5,
     reviews: 98,
     stock: 12,
-    featured: true
+    featured: true,
+    _id: '',
+    data: undefined
   },
   {
     id: '5',
@@ -703,7 +749,9 @@ export const products: Product[] = [
     seller: sellers[2],
     rating: 4.6,
     reviews: 74,
-    stock: 50
+    stock: 50,
+    _id: '',
+    data: undefined
   },
   {
     id: '6',
@@ -717,7 +765,9 @@ export const products: Product[] = [
     seller: sellers[2],
     rating: 4.9,
     reviews: 182,
-    stock: 200
+    stock: 200,
+    _id: '',
+    data: undefined
   },
   {
     id: '7',
@@ -731,7 +781,9 @@ export const products: Product[] = [
     seller: sellers[3],
     rating: 4.7,
     reviews: 43,
-    stock: 8
+    stock: 8,
+    _id: '',
+    data: undefined
   },
   {
     id: '8',
@@ -745,7 +797,9 @@ export const products: Product[] = [
     seller: sellers[3],
     rating: 4.5,
     reviews: 67,
-    stock: 15
+    stock: 15,
+    _id: '',
+    data: undefined
   }
 ];
 
