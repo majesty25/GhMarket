@@ -3,36 +3,43 @@ import { Product } from '@/types';
 import { useCart } from '@/context/cart-context';
 import { toast } from '@/hooks/use-toast';
 import { useState } from 'react';
+import { useAddItemToCartMutation } from '@/redux/features/api/apiSlice';
 
 interface ProductCardProps {
   product: Product;
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
-  const { addToCart, cartItems } = useCart();
-  const [isAdding, setIsAdding] = useState(false);
+  const { cartItems } = useCart();
   const [isHovered, setIsHovered] = useState(false);
+  const [addItemToCart, { isLoading: isAdding }] = useAddItemToCartMutation();
   
   // Check if product is already in cart
   const productInCart = cartItems.find(item => item.product.id === product.id);
 
-  const handleAddToCart = (e: React.MouseEvent) => {
+  const handleAddToCart = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     
-    setIsAdding(true);
-    addToCart(product, 1);
-    
-    toast({
-      title: "Added to cart",
-      description: `${product.name} has been added to your cart.`,
-      duration: 3000,
-    });
-    
-    // Reset animation after a short delay
-    setTimeout(() => {
-      setIsAdding(false);
-    }, 500);
+    try {
+      await addItemToCart({
+        productId: product._id || product.id,
+        quantity: 1
+      }).unwrap();
+      
+      toast({
+        title: "Added to cart",
+        description: `${product.name} has been added to your cart.`,
+        duration: 3000,
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to add item to cart. Please try again.",
+        variant: "destructive",
+        duration: 3000,
+      });
+    }
   };
 
   const handleWishlist = (e: React.MouseEvent) => {
@@ -78,7 +85,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
                   : 'text-neutral-700 hover:text-blue-600'
               }`}
               onClick={handleAddToCart}
-              disabled={isAdding}
+              disabled={isAdding || product.stock === 0}
               aria-label="Add to cart"
             >
               {isAdding ? (

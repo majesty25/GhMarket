@@ -34,8 +34,9 @@ export interface Product {
   id: string | undefined;
   _id: string;
   name: string;
-  count: number;
-  data: any;
+  count: any;
+  data: Product;
+  products: Product[];
   slug: string;
   description: string;
   price: number;
@@ -75,6 +76,10 @@ export interface Order {
   total: number;
   deliveryFee: number;
   tracking?: OrderTracking;
+}
+
+export interface CartCountResponse {
+  count: number;
 }
 
 export type OrderStatus = 'pending' | 'confirmed' | 'processing' | 'picked' | 'en-route' | 'delivered' | 'cancelled';
